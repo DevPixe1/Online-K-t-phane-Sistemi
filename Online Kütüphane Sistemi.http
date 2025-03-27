@@ -1,6 +1,0 @@
-@Online_Kütüphane_Sistemi_HostAddress = http://localhost:5159
-
-GET {{Online_Kütüphane_Sistemi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

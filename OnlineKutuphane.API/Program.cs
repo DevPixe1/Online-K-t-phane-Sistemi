@@ -1,5 +1,5 @@
 
-namespace Online_Kütüphane_Sistemi
+namespace OnlineKutuphane.API
 {
     public class Program
     {

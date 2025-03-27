@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35521.163 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Online Kütüphane Sistemi", "Online Kütüphane Sistemi.csproj", "{92365BCA-AE88-4E57-8096-31A6BFD77B9B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineKutuphane.API", "OnlineKutuphane.API.csproj", "{161D418D-97CD-430F-BE2F-82B8998D1485}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{92365BCA-AE88-4E57-8096-31A6BFD77B9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{92365BCA-AE88-4E57-8096-31A6BFD77B9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{92365BCA-AE88-4E57-8096-31A6BFD77B9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{92365BCA-AE88-4E57-8096-31A6BFD77B9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{161D418D-97CD-430F-BE2F-82B8998D1485}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{161D418D-97CD-430F-BE2F-82B8998D1485}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{161D418D-97CD-430F-BE2F-82B8998D1485}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{161D418D-97CD-430F-BE2F-82B8998D1485}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Online_Kütüphane_Sistemi.Controllers
+namespace OnlineKutuphane.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
