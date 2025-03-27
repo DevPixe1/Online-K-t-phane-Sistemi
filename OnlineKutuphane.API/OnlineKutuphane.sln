@@ -5,6 +5,12 @@ VisualStudioVersion = 17.12.35521.163 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineKutuphane.API", "OnlineKutuphane.API.csproj", "{161D418D-97CD-430F-BE2F-82B8998D1485}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineKutuphane.Core", "..\OnlineKutuphane.Core\OnlineKutuphane.Core.csproj", "{3478ED9E-345A-42B4-BC51-97EA90B754D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineKutuphane.Data", "..\OnlineKutuphane.Data\OnlineKutuphane.Data.csproj", "{3ABB1018-E5A5-450B-90B8-1699514A703A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineKutuphane.Service", "..\OnlineKutuphane.Service\OnlineKutuphane.Service.csproj", "{6E373FC5-7D4E-448F-8DEE-59B489C89CE1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{161D418D-97CD-430F-BE2F-82B8998D1485}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{161D418D-97CD-430F-BE2F-82B8998D1485}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{161D418D-97CD-430F-BE2F-82B8998D1485}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3478ED9E-345A-42B4-BC51-97EA90B754D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3478ED9E-345A-42B4-BC51-97EA90B754D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3478ED9E-345A-42B4-BC51-97EA90B754D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3478ED9E-345A-42B4-BC51-97EA90B754D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3ABB1018-E5A5-450B-90B8-1699514A703A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3ABB1018-E5A5-450B-90B8-1699514A703A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3ABB1018-E5A5-450B-90B8-1699514A703A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3ABB1018-E5A5-450B-90B8-1699514A703A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E373FC5-7D4E-448F-8DEE-59B489C89CE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E373FC5-7D4E-448F-8DEE-59B489C89CE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E373FC5-7D4E-448F-8DEE-59B489C89CE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E373FC5-7D4E-448F-8DEE-59B489C89CE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
