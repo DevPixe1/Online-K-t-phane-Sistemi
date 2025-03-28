@@ -40,5 +40,36 @@ namespace OnlineKutuphane.API.Controllers
 
             return Ok(book);
         }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateBook(int id, Book updatedBook)
+        {
+            var book = await _context.Books.FindAsync(id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            book.Title = updatedBook.Title;
+            book.Author = updatedBook.Author;
+            book.PublishedYear = updatedBook.PublishedYear;
+
+            await _context.SaveChangesAsync();
+            return Ok(book);
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteBook(int id)
+        {
+            var book = await _context.Books.FindAsync(id);
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            _context.Books.Remove(book);
+            await _context.SaveChangesAsync();
+
+            return NoContent(); // 204 No Content döndürüyoruz.
+        }
+
     }
 }
