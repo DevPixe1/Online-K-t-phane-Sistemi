@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineKutuphane.Core;
-using System.Collections.Generic;
-using System.Reflection.Emit;
 
 namespace OnlineKutuphane.Data
 {
@@ -9,11 +7,6 @@ namespace OnlineKutuphane.Data
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        public DbSet<Book> Books { get; set; } // Kitap tablosu
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-        }
+        public DbSet<Book> Books { get; set; }
     }
 }
