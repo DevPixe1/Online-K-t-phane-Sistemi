@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineKutuphane.Core;
-using OnlineKutuphane.Data;
 
 namespace OnlineKutuphane.API.Controllers
 {
@@ -8,68 +7,51 @@ namespace OnlineKutuphane.API.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IBookService _bookService;
 
-        public BooksController(AppDbContext context)
+        public BooksController(IBookService bookService)
         {
-            _context = context;
+            _bookService = bookService;
         }
 
         [HttpPost]
         public IActionResult AddBook([FromBody] Book book)
         {
-            if (book == null || string.IsNullOrEmpty(book.Title))
-            {
-                return BadRequest("Kitap bilgileri eksik!");
-            }
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            _context.Books.Add(book);
-            _context.SaveChanges();  // Veritabanına kaydet
-
+            _bookService.Add(book);
             return CreatedAtAction(nameof(GetBook), new { id = book.Id }, book);
         }
 
         [HttpGet("{id}")]
         public IActionResult GetBook(int id)
         {
-            var book = _context.Books.Find(id);
+            var book = _bookService.GetById(id);
             if (book == null)
-            {
                 return NotFound();
-            }
 
             return Ok(book);
         }
+
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBook(int id, Book updatedBook)
+        public IActionResult UpdateBook(int id, [FromBody] Book updatedBook)
         {
-            var book = await _context.Books.FindAsync(id);
-            if (book == null)
-            {
+            var result = _bookService.Update(id, updatedBook);
+            if (!result)
                 return NotFound();
-            }
 
-            book.Title = updatedBook.Title;
-            book.Author = updatedBook.Author;
-            book.PublishedYear = updatedBook.PublishedYear;
-
-            await _context.SaveChangesAsync();
-            return Ok(book);
+            return Ok(updatedBook);
         }
+
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBook(int id)
+        public IActionResult DeleteBook(int id)
         {
-            var book = await _context.Books.FindAsync(id);
-            if (book == null)
-            {
+            var result = _bookService.Delete(id);
+            if (!result)
                 return NotFound();
-            }
 
-            _context.Books.Remove(book);
-            await _context.SaveChangesAsync();
-
-            return NoContent(); // 204 No Content döndürüyoruz.
+            return NoContent();
         }
-
     }
 }

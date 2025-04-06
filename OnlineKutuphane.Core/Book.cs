@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 
 namespace OnlineKutuphane.Core
 {
@@ -8,11 +7,14 @@ namespace OnlineKutuphane.Core
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [JsonIgnore] // Swagger ve JSON dönüşlerinde gizler
         public int Id { get; set; }
 
+        [Required(ErrorMessage = "Kitap başlığı zorunludur.")]
         public string Title { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Yazar adı zorunludur.")]
         public string Author { get; set; } = string.Empty;
+
         public int PublishedYear { get; set; }
     }
 }

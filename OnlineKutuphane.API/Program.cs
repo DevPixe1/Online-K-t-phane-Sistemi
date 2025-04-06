@@ -1,6 +1,7 @@
-
 using Microsoft.EntityFrameworkCore;
 using OnlineKutuphane.Data;
+using OnlineKutuphane.Service;
+using OnlineKutuphane.Core;
 
 namespace OnlineKutuphane.API
 {
@@ -10,18 +11,21 @@ namespace OnlineKutuphane.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            // Konteynere hizmet ekleyin
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            // Database connection
+            // DbContext
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            // Dependency Injection - SOLID uyumu
+            builder.Services.AddScoped<IBookRepository, BookRepository>();
+            builder.Services.AddScoped<IBookService, BookManager>();
+
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -33,7 +37,6 @@ namespace OnlineKutuphane.API
             app.MapControllers();
 
             app.Run();
-
         }
     }
 }
