@@ -18,61 +18,89 @@ namespace OnlineKutuphane.API.Controllers
         [HttpPost]
         public IActionResult AddBook([FromBody] CreateBookDto dto)
         {
-            if (dto == null || string.IsNullOrEmpty(dto.Title))
-                return BadRequest("Kitap bilgileri eksik!");
-
-            var book = new Book
+            try
             {
-                Title = dto.Title,
-                Author = dto.Author,
-                PublishedYear = dto.Year
-            };
+                if (dto == null || string.IsNullOrEmpty(dto.Title))
+                    return BadRequest("Kitap bilgileri eksik!");
 
-            _bookService.Add(book);
+                var book = new Book
+                {
+                    Title = dto.Title,
+                    Author = dto.Author,
+                    PublishedYear = dto.Year
+                };
 
-            return Ok("Kitap başarıyla eklendi.");
+                _bookService.Add(book);
+
+                return Ok("Kitap başarıyla eklendi.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Sunucu hatası: {ex.Message}");
+            }
         }
 
         [HttpGet("{id}")]
         public IActionResult GetBook(int id)
         {
-            var book = _bookService.GetById(id);
-            if (book == null) return NotFound();
-
-            var dto = new BookDto
+            try
             {
-                Id = book.Id,
-                Title = book.Title,
-                Author = book.Author,
-                Year = book.PublishedYear
-            };
+                var book = _bookService.GetById(id);
+                if (book == null) return NotFound();
 
-            return Ok(dto);
+                var dto = new BookDto
+                {
+                    Id = book.Id,
+                    Title = book.Title,
+                    Author = book.Author,
+                    Year = book.PublishedYear
+                };
+
+                return Ok(dto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Sunucu hatası: {ex.Message}");
+            }
         }
 
         [HttpPut("{id}")]
         public IActionResult UpdateBook(int id, [FromBody] UpdateBookDto dto)
         {
-            var updated = new Book
+            try
             {
-                Title = dto.Title,
-                Author = dto.Author,
-                PublishedYear = dto.Year
-            };
+                var updated = new Book
+                {
+                    Title = dto.Title,
+                    Author = dto.Author,
+                    PublishedYear = dto.Year
+                };
 
-            var result = _bookService.Update(id, updated);
-            if (!result) return NotFound();
+                var result = _bookService.Update(id, updated);
+                if (!result) return NotFound();
 
-            return Ok("Güncellendi.");
+                return Ok("Güncellendi.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Sunucu hatası: {ex.Message}");
+            }
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteBook(int id)
         {
-            var result = _bookService.Delete(id);
-            if (!result) return NotFound();
+            try
+            {
+                var result = _bookService.Delete(id);
+                if (!result) return NotFound();
 
-            return NoContent();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Sunucu hatası: {ex.Message}");
+            }
         }
     }
 }
