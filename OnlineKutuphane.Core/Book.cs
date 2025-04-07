@@ -15,6 +15,7 @@ namespace OnlineKutuphane.Core
         [Required(ErrorMessage = "Yazar adı zorunludur.")]
         public string Author { get; set; } = string.Empty;
 
+        [Required(ErrorMessage = "Tarih girmek zorunludur.")]
         public int PublishedYear { get; set; }
     }
 }
