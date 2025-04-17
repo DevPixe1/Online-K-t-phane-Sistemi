@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using OnlineKutuphane.Data;
 using OnlineKutuphane.Service;
 using OnlineKutuphane.Core;
+using OnlineKutuphane.Core.Repositories;
+using OnlineKutuphane.Data.Repositories;
 
 namespace OnlineKutuphane.API
 {
@@ -11,7 +13,7 @@ namespace OnlineKutuphane.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Konteynere hizmet ekleyin
+            // Controller ve Swagger servisleri
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -20,12 +22,13 @@ namespace OnlineKutuphane.API
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            // Dependency Injection - SOLID uyumu
-            builder.Services.AddScoped<IBookRepository, BookRepository>();
-            builder.Services.AddScoped<IBookService, BookManager>();
+            // Dependency Injection – SOLID prensiplerine uygun þekilde
+            builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            builder.Services.AddScoped<IBookService, BookService>(); // BookManager yerine BookService
 
             var app = builder.Build();
 
+            // Swagger ve diðer middleware'lar
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
