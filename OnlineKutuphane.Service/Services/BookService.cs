@@ -5,36 +5,43 @@ namespace OnlineKutuphane.Service
 {
     public class BookService : IBookService
     {
-        private readonly IGenericRepository<Book> _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public BookService(IGenericRepository<Book> repository)
+        public BookService(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public void Add(Book book)
         {
-            _repository.Add(book);
-        }
-
-        public bool Delete(int id)
-        {
-            return _repository.Delete(id);
-        }
-
-        public List<Book> GetAll()
-        {
-            return _repository.GetAll().ToList();
+            _unitOfWork.Books.Add(book);
+            _unitOfWork.SaveChanges();
         }
 
         public Book? GetById(int id)
         {
-            return _repository.GetById(id);
+            return _unitOfWork.Books.GetById(id);
         }
 
         public bool Update(int id, Book updatedBook)
         {
-            return _repository.Update(id, updatedBook);
+            var result = _unitOfWork.Books.Update(id, updatedBook);
+            if (result)
+                _unitOfWork.SaveChanges();
+            return result;
+        }
+
+        public bool Delete(int id)
+        {
+            var result = _unitOfWork.Books.Delete(id);
+            if (result)
+                _unitOfWork.SaveChanges();
+            return result;
+        }
+
+        public List<Book> GetAll()
+        {
+            return _unitOfWork.Books.GetAll();
         }
     }
 }

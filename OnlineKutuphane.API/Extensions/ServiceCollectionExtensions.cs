@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using OnlineKutuphane.Data;
-using OnlineKutuphane.Core.Repositories;
-using OnlineKutuphane.Data.Repositories;
 using OnlineKutuphane.Core;
+using OnlineKutuphane.Core.Repositories;
+using OnlineKutuphane.Data;
+using OnlineKutuphane.Data.Repositories;
 using OnlineKutuphane.Service;
 
 namespace OnlineKutuphane.API.Extensions
@@ -17,8 +17,13 @@ namespace OnlineKutuphane.API.Extensions
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-            // Repository ve Service kayıtları
+            // Repositories
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+            // Unit of Work
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            // Services
             services.AddScoped<IBookService, BookService>();
 
             return services;

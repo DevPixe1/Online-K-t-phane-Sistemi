@@ -1,4 +1,7 @@
 using OnlineKutuphane.API.Extensions;
+using OnlineKutuphane.Core;
+using OnlineKutuphane.Data;
+using OnlineKutuphane.Service;
 
 namespace OnlineKutuphane.API
 {
@@ -11,8 +14,6 @@ namespace OnlineKutuphane.API
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
-            //Tüm servisleri buradan tek satýrla ekle
             builder.Services.AddProjectServices(builder.Configuration);
 
             var app = builder.Build();
