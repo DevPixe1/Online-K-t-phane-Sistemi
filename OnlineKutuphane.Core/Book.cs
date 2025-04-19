@@ -17,5 +17,9 @@ namespace OnlineKutuphane.Core
 
         [Required(ErrorMessage = "Tarih girmek zorunludur.")]
         public int PublishedYear { get; set; }
+
+        [Required(ErrorMessage = "Kategori seçilmelidir.")]
+        public int CategoryId { get; set; }
+        public Category? Category { get; set; }
     }
 }
