@@ -1,5 +1,6 @@
 ﻿using OnlineKutuphane.Core;
 using OnlineKutuphane.Core.Repositories;
+using System.Collections.Generic;
 
 namespace OnlineKutuphane.Service
 {
@@ -21,6 +22,11 @@ namespace OnlineKutuphane.Service
         public Book? GetById(int id)
         {
             return _unitOfWork.Books.GetById(id);
+        }
+
+        public Book? GetByIdWithCategory(int id)
+        {
+            return _unitOfWork.Books.GetByIdWithInclude(id, b => b.Category);
         }
 
         public bool Update(int id, Book updatedBook)

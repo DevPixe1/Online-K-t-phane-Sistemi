@@ -8,6 +8,7 @@ namespace OnlineKutuphane.Core
     {
         void Add(Book book);
         Book? GetById(int id);
+        Book? GetByIdWithCategory(int id);
         bool Update(int id, Book updatedBook);
         bool Delete(int id);
         List<Book> GetAll(); // Listeleme opsiyonel ama faydalı

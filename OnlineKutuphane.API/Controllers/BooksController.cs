@@ -53,7 +53,8 @@ namespace OnlineKutuphane.API.Controllers
                     Id = book.Id,
                     Title = book.Title,
                     Author = book.Author,
-                    Year = book.PublishedYear
+                    Year = book.PublishedYear,
+                    CategoryName = book.Category?.Name ?? ""
                 };
 
                 return Ok(dto);
@@ -73,7 +74,8 @@ namespace OnlineKutuphane.API.Controllers
                 {
                     Title = dto.Title,
                     Author = dto.Author,
-                    PublishedYear = dto.Year
+                    PublishedYear = dto.Year,
+                    CategoryId = dto.CategoryId
                 };
 
                 var result = _bookService.Update(id, updated);
