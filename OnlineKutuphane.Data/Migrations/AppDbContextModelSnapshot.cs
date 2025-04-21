@@ -65,6 +65,23 @@ namespace OnlineKutuphane.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Roman"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Bilim"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Tarih"
+                        });
                 });
 
             modelBuilder.Entity("OnlineKutuphane.Core.Book", b =>

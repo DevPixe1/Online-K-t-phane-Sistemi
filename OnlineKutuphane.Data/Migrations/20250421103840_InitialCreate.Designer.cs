@@ -11,8 +11,8 @@ using OnlineKutuphane.Data;
 namespace OnlineKutuphane.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250419113233_AddCategoryToBook")]
-    partial class AddCategoryToBook
+    [Migration("20250421103840_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,6 +68,23 @@ namespace OnlineKutuphane.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Roman"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Bilim"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Tarih"
+                        });
                 });
 
             modelBuilder.Entity("OnlineKutuphane.Core.Book", b =>

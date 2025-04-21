@@ -20,19 +20,19 @@ namespace OnlineKutuphane.API.Controllers
         {
             try
             {
-                if (dto == null || string.IsNullOrEmpty(dto.Title))
-                    return BadRequest("Kitap bilgileri eksik!");
+                if (dto == null) return BadRequest("Veri eksik");
 
                 var book = new Book
                 {
                     Title = dto.Title,
                     Author = dto.Author,
-                    PublishedYear = dto.Year
+                    PublishedYear = dto.Year,
+                    CategoryId = dto.CategoryId
                 };
 
                 _bookService.Add(book);
 
-                return Ok("Kitap başarıyla eklendi.");
+                return Ok("Kitap eklendi.");
             }
             catch (Exception ex)
             {
