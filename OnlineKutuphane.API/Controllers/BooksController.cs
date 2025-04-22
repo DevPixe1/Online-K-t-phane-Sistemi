@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using OnlineKutuphane.Core;
 using OnlineKutuphane.Core.Dtos;
 
@@ -9,10 +10,11 @@ namespace OnlineKutuphane.API.Controllers
     public class BooksController : ControllerBase
     {
         private readonly IBookService _bookService;
-
-        public BooksController(IBookService bookService)
+        private readonly IMapper _mapper;
+        public BooksController(IBookService bookService, IMapper mapper)
         {
             _bookService = bookService;
+            _mapper = mapper;
         }
 
         [HttpPost]
@@ -39,24 +41,15 @@ namespace OnlineKutuphane.API.Controllers
                 return StatusCode(500, $"Sunucu hatası: {ex.Message}");
             }
         }
-
         [HttpGet("{id}")]
         public IActionResult GetBook(int id)
         {
             try
             {
-                var book = _bookService.GetById(id);
+                var book = _bookService.GetByIdWithCategory(id);
                 if (book == null) return NotFound();
 
-                var dto = new BookDto
-                {
-                    Id = book.Id,
-                    Title = book.Title,
-                    Author = book.Author,
-                    Year = book.PublishedYear,
-                    CategoryName = book.Category?.Name ?? ""
-                };
-
+                var dto = _mapper.Map<BookDto>(book);
                 return Ok(dto);
             }
             catch (Exception ex)
@@ -64,6 +57,7 @@ namespace OnlineKutuphane.API.Controllers
                 return StatusCode(500, $"Sunucu hatası: {ex.Message}");
             }
         }
+
 
         [HttpPut("{id}")]
         public IActionResult UpdateBook(int id, [FromBody] UpdateBookDto dto)
