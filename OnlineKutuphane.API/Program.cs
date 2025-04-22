@@ -16,6 +16,9 @@ namespace OnlineKutuphane.API
             builder.Services.AddSwaggerGen();
             builder.Services.AddProjectServices(builder.Configuration);
 
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())

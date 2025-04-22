@@ -11,7 +11,7 @@ using OnlineKutuphane.Data;
 namespace OnlineKutuphane.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250421103840_InitialCreate")]
+    [Migration("20250421184009_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
