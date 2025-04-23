@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using OnlineKutuphane.Core;
 using OnlineKutuphane.Core.Dtos;
+using OnlineKutuphane.Core.Services;
 
 namespace OnlineKutuphane.API.Controllers
 {
@@ -11,6 +11,7 @@ namespace OnlineKutuphane.API.Controllers
     {
         private readonly IBookService _bookService;
         private readonly IMapper _mapper;
+
         public BooksController(IBookService bookService, IMapper mapper)
         {
             _bookService = bookService;
@@ -24,16 +25,7 @@ namespace OnlineKutuphane.API.Controllers
             {
                 if (dto == null) return BadRequest("Veri eksik");
 
-                var book = new Book
-                {
-                    Title = dto.Title,
-                    Author = dto.Author,
-                    PublishedYear = dto.Year,
-                    CategoryId = dto.CategoryId
-                };
-
-                _bookService.Add(book);
-
+                _bookService.Add(dto); // DTO olarak gönderiliyor
                 return Ok("Kitap eklendi.");
             }
             catch (Exception ex)
@@ -41,6 +33,7 @@ namespace OnlineKutuphane.API.Controllers
                 return StatusCode(500, $"Sunucu hatası: {ex.Message}");
             }
         }
+
         [HttpGet("{id}")]
         public IActionResult GetBook(int id)
         {
@@ -49,7 +42,7 @@ namespace OnlineKutuphane.API.Controllers
                 var book = _bookService.GetByIdWithCategory(id);
                 if (book == null) return NotFound();
 
-                var dto = _mapper.Map<BookDto>(book);
+                var dto = _mapper.Map<BookDto>(book); // AutoMapper ile dönüşüm
                 return Ok(dto);
             }
             catch (Exception ex)
@@ -58,21 +51,12 @@ namespace OnlineKutuphane.API.Controllers
             }
         }
 
-
         [HttpPut("{id}")]
         public IActionResult UpdateBook(int id, [FromBody] UpdateBookDto dto)
         {
             try
             {
-                var updated = new Book
-                {
-                    Title = dto.Title,
-                    Author = dto.Author,
-                    PublishedYear = dto.Year,
-                    CategoryId = dto.CategoryId
-                };
-
-                var result = _bookService.Update(id, updated);
+                var result = _bookService.Update(id, dto); // DTO ile update
                 if (!result) return NotFound();
 
                 return Ok("Güncellendi.");

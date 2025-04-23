@@ -2,6 +2,7 @@ using OnlineKutuphane.API.Extensions;
 using OnlineKutuphane.Core;
 using OnlineKutuphane.Data;
 using OnlineKutuphane.Service;
+using OnlineKutuphane.Core.Services;
 
 namespace OnlineKutuphane.API
 {
@@ -15,8 +16,8 @@ namespace OnlineKutuphane.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddProjectServices(builder.Configuration);
-
             builder.Services.AddAutoMapper(typeof(MappingProfile));
+
 
 
             var app = builder.Build();

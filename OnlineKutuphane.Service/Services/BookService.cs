@@ -1,40 +1,37 @@
-﻿using OnlineKutuphane.Core;
+﻿using AutoMapper;
+using OnlineKutuphane.Core;
+using OnlineKutuphane.Core.Dtos;
 using OnlineKutuphane.Core.Repositories;
-using System.Collections.Generic;
+using OnlineKutuphane.Core.Services;
 
 namespace OnlineKutuphane.Service
 {
     public class BookService : IBookService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public BookService(IUnitOfWork unitOfWork)
+        public BookService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
-        public void Add(Book book)
+        public void Add(CreateBookDto dto)
         {
+            var book = _mapper.Map<Book>(dto);
             _unitOfWork.Books.Add(book);
             _unitOfWork.SaveChanges();
         }
 
-        public Book? GetById(int id)
+        public bool Update(int id, UpdateBookDto dto)
         {
-            return _unitOfWork.Books.GetById(id);
-        }
+            var existingBook = _unitOfWork.Books.GetById(id);
+            if (existingBook == null) return false;
 
-        public Book? GetByIdWithCategory(int id)
-        {
-            return _unitOfWork.Books.GetByIdWithInclude(id, b => b.Category);
-        }
-
-        public bool Update(int id, Book updatedBook)
-        {
-            var result = _unitOfWork.Books.Update(id, updatedBook);
-            if (result)
-                _unitOfWork.SaveChanges();
-            return result;
+            _mapper.Map(dto, existingBook); // Güncellemeyi dto ile yap
+            _unitOfWork.SaveChanges();
+            return true;
         }
 
         public bool Delete(int id)
@@ -45,9 +42,22 @@ namespace OnlineKutuphane.Service
             return result;
         }
 
-        public List<Book> GetAll()
+        public BookDto? GetById(int id)
         {
-            return _unitOfWork.Books.GetAll();
+            var book = _unitOfWork.Books.GetById(id);
+            return book == null ? null : _mapper.Map<BookDto>(book);
+        }
+
+        public BookDto? GetByIdWithCategory(int id)
+        {
+            var book = _unitOfWork.Books.GetByIdWithInclude(id, b => b.Category);
+            return book == null ? null : _mapper.Map<BookDto>(book);
+        }
+
+        public List<BookDto> GetAll()
+        {
+            var books = _unitOfWork.Books.GetAll();
+            return books.Select(b => _mapper.Map<BookDto>(b)).ToList();
         }
     }
 }

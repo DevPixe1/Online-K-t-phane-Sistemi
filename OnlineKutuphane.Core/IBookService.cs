@@ -1,16 +1,14 @@
-﻿using OnlineKutuphane.Core;
-using System.Collections.Generic;
+﻿using OnlineKutuphane.Core.Dtos;
 
-namespace OnlineKutuphane.Core
+namespace OnlineKutuphane.Core.Services
 {
-    // Servis arayüzü: iş mantığı seviyesinde yapılacak işlemleri tanımlar
     public interface IBookService
     {
-        void Add(Book book);
-        Book? GetById(int id);
-        Book? GetByIdWithCategory(int id);
-        bool Update(int id, Book updatedBook);
+        void Add(CreateBookDto dto);
+        bool Update(int id, UpdateBookDto dto);
         bool Delete(int id);
-        List<Book> GetAll(); // Listeleme opsiyonel ama faydalı
+        BookDto? GetById(int id);
+        BookDto? GetByIdWithCategory(int id);
+        List<BookDto> GetAll();
     }
 }

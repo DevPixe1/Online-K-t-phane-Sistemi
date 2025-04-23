@@ -8,7 +8,7 @@ namespace OnlineKutuphane.Core.Repositories
     {
         void Add(T entity);
         T? GetById(int id);
-        T? GetByIdWithInclude(int id, params Expression<Func<T, object>>[] includes); // <-- Yeni
+        T? GetByIdWithInclude(int id, params Expression<Func<T, object>>[] includes);
         bool Update(int id, T updated);
         bool Delete(int id);
         List<T> GetAll();
