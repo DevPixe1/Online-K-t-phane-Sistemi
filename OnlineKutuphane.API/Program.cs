@@ -3,6 +3,8 @@ using OnlineKutuphane.Core;
 using OnlineKutuphane.Data;
 using OnlineKutuphane.Service;
 using OnlineKutuphane.Core.Services;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 
 namespace OnlineKutuphane.API
 {
@@ -12,13 +14,23 @@ namespace OnlineKutuphane.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // FluentValidation middleware’lerini ekle
+            builder.Services.AddFluentValidationAutoValidation();
+            builder.Services.AddFluentValidationClientsideAdapters();
+            builder.Services.AddValidatorsFromAssemblyContaining<CreateBookDtoValidator>();
+
+            // Controllers
             builder.Services.AddControllers();
+
+            // Swagger
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            // Custom service registrations (Db, Repos, Services, UoW)
             builder.Services.AddProjectServices(builder.Configuration);
+
+            // AutoMapper
             builder.Services.AddAutoMapper(typeof(MappingProfile));
-
-
 
             var app = builder.Build();
 

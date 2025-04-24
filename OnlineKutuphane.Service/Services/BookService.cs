@@ -26,21 +26,25 @@ namespace OnlineKutuphane.Service
 
         public bool Update(int id, UpdateBookDto dto)
         {
-            var existingBook = _unitOfWork.Books.GetById(id);
-            if (existingBook == null) return false;
+            var existing = _unitOfWork.Books.GetById(id);
+            if (existing == null) return false;
 
-            _mapper.Map(dto, existingBook); // Güncellemeyi dto ile yap
+            _mapper.Map(dto, existing); // DTO'yu mevcut entitiy'e uygula
             _unitOfWork.SaveChanges();
             return true;
         }
 
+
         public bool Delete(int id)
         {
-            var result = _unitOfWork.Books.Delete(id);
-            if (result)
-                _unitOfWork.SaveChanges();
-            return result;
+            var success = _unitOfWork.Books.Delete(id);
+            if (!success) return false;
+
+            _unitOfWork.SaveChanges();
+            return true;
         }
+
+
 
         public BookDto? GetById(int id)
         {
@@ -53,11 +57,10 @@ namespace OnlineKutuphane.Service
             var book = _unitOfWork.Books.GetByIdWithInclude(id, b => b.Category);
             return book == null ? null : _mapper.Map<BookDto>(book);
         }
-
         public List<BookDto> GetAll()
         {
             var books = _unitOfWork.Books.GetAll();
-            return books.Select(b => _mapper.Map<BookDto>(b)).ToList();
+            return _mapper.Map<List<BookDto>>(books);
         }
     }
 }

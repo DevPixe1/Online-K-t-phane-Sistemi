@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OnlineKutuphane.Core.Dtos;
 using OnlineKutuphane.Core.Services;
 
@@ -10,22 +9,21 @@ namespace OnlineKutuphane.API.Controllers
     public class BooksController : ControllerBase
     {
         private readonly IBookService _bookService;
-        private readonly IMapper _mapper;
 
-        public BooksController(IBookService bookService, IMapper mapper)
+        public BooksController(IBookService bookService)
         {
             _bookService = bookService;
-            _mapper = mapper;
         }
 
         [HttpPost]
         public IActionResult AddBook([FromBody] CreateBookDto dto)
         {
+            if (dto == null)
+                return BadRequest("Veri eksik.");
+
             try
             {
-                if (dto == null) return BadRequest("Veri eksik");
-
-                _bookService.Add(dto); // DTO olarak gönderiliyor
+                _bookService.Add(dto);
                 return Ok("Kitap eklendi.");
             }
             catch (Exception ex)
@@ -39,10 +37,10 @@ namespace OnlineKutuphane.API.Controllers
         {
             try
             {
-                var book = _bookService.GetByIdWithCategory(id);
-                if (book == null) return NotFound();
+                var dto = _bookService.GetByIdWithCategory(id);
+                if (dto == null)
+                    return NotFound("Kitap bulunamadı.");
 
-                var dto = _mapper.Map<BookDto>(book); // AutoMapper ile dönüşüm
                 return Ok(dto);
             }
             catch (Exception ex)
@@ -54,12 +52,13 @@ namespace OnlineKutuphane.API.Controllers
         [HttpPut("{id}")]
         public IActionResult UpdateBook(int id, [FromBody] UpdateBookDto dto)
         {
+            if (dto == null)
+                return BadRequest("Güncelleme verisi eksik.");
+
             try
             {
-                var result = _bookService.Update(id, dto); // DTO ile update
-                if (!result) return NotFound();
-
-                return Ok("Güncellendi.");
+                var result = _bookService.Update(id, dto);
+                return result ? Ok("Güncellendi.") : NotFound("Kitap bulunamadı.");
             }
             catch (Exception ex)
             {
@@ -73,9 +72,7 @@ namespace OnlineKutuphane.API.Controllers
             try
             {
                 var result = _bookService.Delete(id);
-                if (!result) return NotFound();
-
-                return NoContent();
+                return result ? NoContent() : NotFound("Kitap bulunamadı.");
             }
             catch (Exception ex)
             {

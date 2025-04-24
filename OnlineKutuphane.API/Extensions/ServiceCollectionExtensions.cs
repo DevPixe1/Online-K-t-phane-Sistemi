@@ -7,7 +7,8 @@ using OnlineKutuphane.Data;
 using OnlineKutuphane.Data.Repositories;
 using OnlineKutuphane.Service;
 using OnlineKutuphane.Core.Services;
-
+using FluentValidation;
+using FluentValidation.AspNetCore;
 
 namespace OnlineKutuphane.API.Extensions
 {
@@ -18,6 +19,11 @@ namespace OnlineKutuphane.API.Extensions
             // DbContext
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+            // FluentValidation ayarları
+            services.AddFluentValidationAutoValidation();
+            services.AddFluentValidationClientsideAdapters();
+            services.AddValidatorsFromAssemblyContaining<CreateBookDtoValidator>();
 
             // Repositories
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
