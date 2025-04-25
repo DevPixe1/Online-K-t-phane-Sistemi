@@ -1,6 +1,5 @@
 using OnlineKutuphane.API.Extensions;
 using OnlineKutuphane.Core;
-using OnlineKutuphane.Data;
 using OnlineKutuphane.Service;
 using OnlineKutuphane.Core.Services;
 using FluentValidation;
@@ -24,7 +23,12 @@ namespace OnlineKutuphane.API
 
             //Swagger kullan
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            //Swagger kullan
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.EnableAnnotations(); //Swagger'a açýklama ekler
+            });
 
             //Custom service registrations (Db, Repos, Services, UoW)
             builder.Services.AddProjectServices(builder.Configuration);

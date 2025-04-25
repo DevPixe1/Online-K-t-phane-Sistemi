@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineKutuphane.Core.Dtos;
 using OnlineKutuphane.Core.Services;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace OnlineKutuphane.API.Controllers
 {
@@ -88,6 +89,42 @@ namespace OnlineKutuphane.API.Controllers
                     return NotFound("Silinecek kitap bulunamadı.");
 
                 return NoContent(); //Başarıyla silinmişse 204 döner
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Sunucu hatası: {ex.Message}");
+            }
+        }
+
+        //Tüm kitapları getirir
+        [HttpGet]
+        [SwaggerOperation(Summary = "Tüm kitaplar", Description = "Veritabanındaki tüm kitapları listele.")]
+        public IActionResult GetAllBooks()
+        {
+            try
+            {
+                var books = _bookService.GetAll();
+                return Ok(books);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Sunucu hatası: {ex.Message}");
+            }
+        }
+
+        //Belirli bir kategoriye ait kitapları getirir
+        [HttpGet("category/{categoryId}")]
+        [SwaggerOperation(Summary = "Kategoriye göre kitaplar", Description = "Belirli bir kategoriye ait kitapları döndürür.")]
+        public IActionResult GetBooksByCategory(int categoryId)
+        {
+            try
+            {
+                var books = _bookService.GetBooksByCategory(categoryId);
+
+                if (!books.Any())
+                    return NotFound("Bu kategoriye ait kitap bulunamadı.");
+
+                return Ok(books);
             }
             catch (Exception ex)
             {

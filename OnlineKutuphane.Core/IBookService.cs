@@ -11,6 +11,7 @@ namespace OnlineKutuphane.Core.Services
         bool Delete(int id);
         BookDto? GetById(int id);
         BookDto? GetByIdWithCategory(int id);
+        IEnumerable<BookDto> GetBooksByCategory(int categoryId);
         List<BookDto> GetAll();
     }
 }

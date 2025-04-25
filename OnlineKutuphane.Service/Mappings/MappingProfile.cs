@@ -16,6 +16,5 @@ public class MappingProfile : Profile
 
         //Book dönüşümünü yapar (Kitap güncellerken kullanılır)
         CreateMap<UpdateBookDto, Book>();
-
     }
 }

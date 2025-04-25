@@ -57,6 +57,19 @@ namespace OnlineKutuphane.Data.Repositories
             return true;
         }
 
+        //Veritabanından veri çekerken ilişkili tabloları (navigation property) da dahil eder.
+        public IEnumerable<T> GetAllWithInclude(params Expression<Func<T, object>>[] includeProperties)
+        {
+            IQueryable<T> query = _context.Set<T>(); //Tüm entity’leri al
+
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty); //İlgili özelliği ekle (örnek: Category)
+            }
+
+            return query;
+        }
+
         //Tüm verileri getirir
         public List<T> GetAll() => _context.Set<T>().ToList();
     }

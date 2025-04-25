@@ -21,6 +21,9 @@ namespace OnlineKutuphane.Core.Repositories
         //Verilen ID'ye sahip entity'yi siler
         bool Delete(int id);
 
+        //Amaç: Tüm verileri getirirken ilişkili (navigation) property’leri de dahil etmek.
+        IEnumerable<T> GetAllWithInclude(params Expression<Func<T, object>>[] includeProperties);
+
         //Veritabanındaki tüm entity'leri listeler
         List<T> GetAll();
     }
