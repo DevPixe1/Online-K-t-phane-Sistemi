@@ -14,22 +14,22 @@ namespace OnlineKutuphane.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // FluentValidation middleware’lerini ekle
+            //FluentValidation middleware’lerini ekle
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddFluentValidationClientsideAdapters();
             builder.Services.AddValidatorsFromAssemblyContaining<CreateBookDtoValidator>();
 
-            // Controllers
+            //Kontroller
             builder.Services.AddControllers();
 
-            // Swagger
+            //Swagger kullan
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            // Custom service registrations (Db, Repos, Services, UoW)
+            //Custom service registrations (Db, Repos, Services, UoW)
             builder.Services.AddProjectServices(builder.Configuration);
 
-            // AutoMapper
+            //AutoMapper
             builder.Services.AddAutoMapper(typeof(MappingProfile));
 
             var app = builder.Build();

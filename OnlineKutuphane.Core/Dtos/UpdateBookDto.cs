@@ -1,5 +1,6 @@
 ﻿namespace OnlineKutuphane.Core.Dtos
 {
+    //Var olan bir kitabı güncellemek için kullanılan veri transfer nesnesi (DTO)
     public class UpdateBookDto
     {
         public string Title { get; set; } = string.Empty;

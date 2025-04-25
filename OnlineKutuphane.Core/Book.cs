@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineKutuphane.Core
 {
+    //Amaç: Kütüphane sisteminde her bir kitabı temsil eder. Kitap bilgilerini tutar ve kategori ile ilişkilidir.
     public class Book
     {
         [Key]

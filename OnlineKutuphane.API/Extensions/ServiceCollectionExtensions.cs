@@ -12,26 +12,27 @@ using FluentValidation.AspNetCore;
 
 namespace OnlineKutuphane.API.Extensions
 {
+    //Uygulama servislerini tek bir yerden merkezi olarak yapılandırmak için kullanılır
     public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddProjectServices(this IServiceCollection services, IConfiguration configuration)
         {
-            // DbContext
+            //Veritabanı bağlantısı ve DbContext konfigürasyonu
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-            // FluentValidation ayarları
+            //FluentValidation ayarları
             services.AddFluentValidationAutoValidation();
             services.AddFluentValidationClientsideAdapters();
             services.AddValidatorsFromAssemblyContaining<CreateBookDtoValidator>();
 
-            // Repositories
+            //Generic repository'lerin DI (Dependency Injection) kaydı
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
-            // Unit of Work
+            //Unit of Work deseninin DI kaydı
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            // Services
+            //Uygulama servislerinin DI kaydı / Servisler
             services.AddScoped<IBookService, BookService>();
 
             return services;

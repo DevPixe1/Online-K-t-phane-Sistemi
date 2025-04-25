@@ -6,6 +6,7 @@ using OnlineKutuphane.Core.Services;
 
 namespace OnlineKutuphane.Service
 {
+    //Kitap işlemlerini yönetir
     public class BookService : IBookService
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -16,7 +17,8 @@ namespace OnlineKutuphane.Service
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-
+        
+        //Kitabı ekler
         public void Add(CreateBookDto dto)
         {
             var book = _mapper.Map<Book>(dto);
@@ -24,6 +26,7 @@ namespace OnlineKutuphane.Service
             _unitOfWork.SaveChanges();
         }
 
+        //Kitabı günceller
         public bool Update(int id, UpdateBookDto dto)
         {
             var existing = _unitOfWork.Books.GetById(id);
@@ -34,7 +37,7 @@ namespace OnlineKutuphane.Service
             return true;
         }
 
-
+        //Kitap siler
         public bool Delete(int id)
         {
             var success = _unitOfWork.Books.Delete(id);
@@ -44,19 +47,21 @@ namespace OnlineKutuphane.Service
             return true;
         }
 
-
-
+        //Kitabı ID ile getirir.
         public BookDto? GetById(int id)
         {
             var book = _unitOfWork.Books.GetById(id);
             return book == null ? null : _mapper.Map<BookDto>(book);
         }
 
+        //Kitabı kategori bilgisiyle birlikte getirir
         public BookDto? GetByIdWithCategory(int id)
         {
             var book = _unitOfWork.Books.GetByIdWithInclude(id, b => b.Category);
             return book == null ? null : _mapper.Map<BookDto>(book);
         }
+
+        //Tüm kitapları listeler
         public List<BookDto> GetAll()
         {
             var books = _unitOfWork.Books.GetAll();

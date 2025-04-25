@@ -2,6 +2,8 @@
 
 namespace OnlineKutuphane.Core.Services
 {
+    // Amaç: Kitaplara dair işlemleri (ekleme, güncelleme, silme, listeleme) servis katmanında tanımlamak için kullanılır.
+    // Controller katmanı bu arayüzü kullanarak iş mantığına erişir.
     public interface IBookService
     {
         void Add(CreateBookDto dto);

@@ -1,5 +1,6 @@
 ﻿namespace OnlineKutuphane.Core.Dtos
 {
+    //API'den kitap bilgilerini istemcilere dönerken kullanılan veri transfer nesnesi (DTO). Sadece gerekli ve gösterilecek bilgileri içerir
     public class BookDto
     {
         public int Id { get; set; }

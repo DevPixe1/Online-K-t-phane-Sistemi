@@ -1,5 +1,6 @@
 ﻿namespace OnlineKutuphane.Core.Dtos
 {
+    //Yeni kitap oluşturmak için kullanılan veri transfer nesnesi (DTO)
     public class CreateBookDto
     {
         public string Title { get; set; } = string.Empty;
