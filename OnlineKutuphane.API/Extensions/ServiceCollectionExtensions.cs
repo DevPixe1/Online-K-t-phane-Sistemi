@@ -5,7 +5,7 @@ using OnlineKutuphane.Core;
 using OnlineKutuphane.Core.Repositories;
 using OnlineKutuphane.Data;
 using OnlineKutuphane.Data.Repositories;
-using OnlineKutuphane.Service;
+using OnlineKutuphane.Service.Services;
 using OnlineKutuphane.Core.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -24,7 +24,6 @@ namespace OnlineKutuphane.API.Extensions
             //FluentValidation ayarları
             services.AddFluentValidationAutoValidation();
             services.AddFluentValidationClientsideAdapters();
-            services.AddValidatorsFromAssemblyContaining<CreateBookDtoValidator>();
 
             //Generic repository'lerin DI (Dependency Injection) kaydı
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));

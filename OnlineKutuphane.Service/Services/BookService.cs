@@ -4,7 +4,7 @@ using OnlineKutuphane.Core.Dtos;
 using OnlineKutuphane.Core.Repositories;
 using OnlineKutuphane.Core.Services;
 
-namespace OnlineKutuphane.Service
+namespace OnlineKutuphane.Service.Services
 {
     //Kitap işlemlerini yönetir
     public class BookService : IBookService
@@ -58,14 +58,12 @@ namespace OnlineKutuphane.Service
 
         public List<BookDto> GetAll()
         {
-            // Kategori dahil olarak kitapları getir
             var books = _unitOfWork.Books.GetAllWithInclude(b => b.Category).ToList();
             return _mapper.Map<List<BookDto>>(books);
         }
 
         public IEnumerable<BookDto> GetBooksByCategory(int categoryId)
         {
-            // Sadece ilgili kategoriye ait kitapları getirirken, Category bilgisini de dahil et
             var books = _unitOfWork.Books
                 .GetAllWithInclude(b => b.Category)
                 .Where(b => b.CategoryId == categoryId)

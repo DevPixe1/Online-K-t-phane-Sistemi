@@ -4,6 +4,8 @@ using OnlineKutuphane.Service;
 using OnlineKutuphane.Core.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using OnlineKutuphane.Service.Services;
+using OnlineKutuphane.API.Middlewares;
 
 namespace OnlineKutuphane.API
 {
@@ -16,13 +18,10 @@ namespace OnlineKutuphane.API
             //FluentValidation middleware’lerini ekle
             builder.Services.AddFluentValidationAutoValidation();
             builder.Services.AddFluentValidationClientsideAdapters();
-            builder.Services.AddValidatorsFromAssemblyContaining<CreateBookDtoValidator>();
 
             //Kontroller
             builder.Services.AddControllers();
 
-            //Swagger kullan
-            builder.Services.AddEndpointsApiExplorer();
             //Swagger kullan
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
@@ -36,6 +35,9 @@ namespace OnlineKutuphane.API
             //AutoMapper
             builder.Services.AddAutoMapper(typeof(MappingProfile));
 
+            //CategoryService registration
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
+
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
@@ -44,6 +46,7 @@ namespace OnlineKutuphane.API
                 app.UseSwaggerUI();
             }
 
+            app.UseMiddleware<ExceptionMiddleware>();
             app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers();

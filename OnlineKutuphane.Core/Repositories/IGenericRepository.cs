@@ -6,25 +6,25 @@ namespace OnlineKutuphane.Core.Repositories
 {
     public interface IGenericRepository<T> where T : class
     {
-        //Yeni kitabı veritabanına ekler.
+        //Yeni bir entity'yi veritabanına ekler.
         void Add(T entity);
 
-        //Belirli bir ID'ye sahip kitabı getirir.
+        //Belirli bir ID'ye sahip entity'yi getirir.
         T? GetById(int id);
 
-        //Kitabı belirli ilişkili (include edilen) nesnelerle birlikte getirir
+        //Entity'yi belirtilen ilişkili (include edilen) nesnelerle birlikte getirir.
         T? GetByIdWithInclude(int id, params Expression<Func<T, object>>[] includes);
 
-        //Verilen ID'ye sahip entity'yi günceller
+        //Belirli bir ID'ye sahip entity'yi günceller.
         bool Update(int id, T updated);
 
-        //Verilen ID'ye sahip entity'yi siler
+        //Belirli bir ID'ye sahip entity'yi siler.
         bool Delete(int id);
 
-        //Amaç: Tüm verileri getirirken ilişkili (navigation) property’leri de dahil etmek.
+        //Tüm entity'leri ilişkili verilerle (navigation properties) birlikte getirir.
         IEnumerable<T> GetAllWithInclude(params Expression<Func<T, object>>[] includeProperties);
 
-        //Veritabanındaki tüm entity'leri listeler
+        //Veritabanındaki tüm entity'leri listeler.
         List<T> GetAll();
     }
 }
