@@ -6,6 +6,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using OnlineKutuphane.Service.Services;
 using OnlineKutuphane.API.Middlewares;
+using OnlineKutuphane.Core.Dtos;
 
 namespace OnlineKutuphane.API
 {
@@ -15,31 +16,32 @@ namespace OnlineKutuphane.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            //FluentValidation middleware’lerini ekle
-            builder.Services.AddFluentValidationAutoValidation();
-            builder.Services.AddFluentValidationClientsideAdapters();
+            // Add services to the container.
 
-            //Kontroller
-            builder.Services.AddControllers();
-
-            //Swagger kullan
+            builder.Services.AddControllers(); // Sadece AddControllers
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
             {
-                c.EnableAnnotations(); //Swagger'a açýklama ekler
+                c.EnableAnnotations();
             });
 
-            //Custom service registrations (Db, Repos, Services, UoW)
+            // FluentValidation servis kaydý (Doðrusu)
+            builder.Services.AddFluentValidationAutoValidation();
+            builder.Services.AddFluentValidationClientsideAdapters();
+            builder.Services.AddValidatorsFromAssemblyContaining<CreateBookDtoValidator>();
+
+            // Proje servisleri
             builder.Services.AddProjectServices(builder.Configuration);
 
-            //AutoMapper
+            // AutoMapper
             builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-            //CategoryService registration
+            // CategoryService kaydý
             builder.Services.AddScoped<ICategoryService, CategoryService>();
 
             var app = builder.Build();
 
+            // Middleware pipeline
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -47,6 +49,7 @@ namespace OnlineKutuphane.API
             }
 
             app.UseMiddleware<ExceptionMiddleware>();
+
             app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers();
